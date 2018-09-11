@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+    }
+}
+
+group 'RestApp'
+version '1.0-SNAPSHOT'
+
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = 'rest-service'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.projectlombok:lombok:1.16.12'
+    compile('org.springframework.boot:spring-boot-starter-data-cassandra')
+    compile("org.springframework:spring-web")
+    compile 'org.modelmapper:modelmapper:1.1.2'
+    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.9'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+
+    testCompile('org.springframework.boot:spring-boot-starter-test',
+                'org.mockito:mockito-all:1.10.19',
+                'junit:junit:4.12'
+    )
+}
