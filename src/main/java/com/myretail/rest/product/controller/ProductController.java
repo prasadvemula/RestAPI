@@ -25,6 +25,7 @@ public class ProductController {
         this.priceService = priceService;
     }
 
+
     @RequestMapping(value ="/product/{id}", method = RequestMethod.GET)
     public ProductResponse getProductDetails(@PathVariable String id) {
         StopWatch watch = new StopWatch();
