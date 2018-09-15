@@ -16,12 +16,4 @@ public class Price implements Serializable {
 
     private String currency;
 
-    @Override
-    public String toString() {
-        return "Price{" +
-                "id='" + id + '\'' +
-                ", price='" + price + '\'' +
-                ", currency='" + currency + '\'' +
-                '}';
-    }
 }

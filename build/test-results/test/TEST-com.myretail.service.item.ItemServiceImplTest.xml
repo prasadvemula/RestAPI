@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.myretail.service.item.ItemServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-09-11T18:53:56" hostname="88e9fe50ec23" time="0.007">
-  <properties/>
-  <testcase name="testGetProductDetails" classname="com.myretail.service.item.ItemServiceImplTest" time="0.007"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

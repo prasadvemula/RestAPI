@@ -28,12 +28,9 @@ public class ProductAggregatorImpl implements ProductAggregator {
     public ProductResponse fetchProduct(String id) {
         Observable<ProductResponse> itemObservable
                 = Observable.fromCallable(() -> itemService.getProductDetails(id)).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
-        Observable<Price> priceObservable = Observable.fromCallable(() -> priceService.fetchPrice(id)).subscribeOn((Schedulers.io())).observeOn((Schedulers.single()));
-
-
-        itemObservable.onErrorReturn(throwable -> new ProductResponse());
-
-        priceObservable.onErrorReturn(throwable -> new Price());
+        Observable<Price> priceObservable =
+                Observable.fromCallable(() -> priceService.fetchPrice(id)).subscribeOn(
+                        (Schedulers.io())).observeOn((Schedulers.single())).onErrorReturnItem(new Price());
 
         ProductResponse product = Observable.zip(itemObservable, priceObservable, this::aggregate).blockingFirst();
 
@@ -43,7 +40,10 @@ public class ProductAggregatorImpl implements ProductAggregator {
 
     public ProductResponse aggregate(ProductResponse product, Price price) {
         if(price != null) {
-            product.setPrice(price.getPrice());
+            ProductResponse.Price priceResponse = new ProductResponse.Price();
+            priceResponse.setValue(price.getPrice());
+            priceResponse.setCurrency(price.getCurrency());
+            product.setPrice(priceResponse);
         }
 
         return product;

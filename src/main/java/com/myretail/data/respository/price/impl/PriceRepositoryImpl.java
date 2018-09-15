@@ -24,7 +24,7 @@ public class PriceRepositoryImpl implements PriceRepository {
         watch.start();
         Price price = cassandraOperations.selectOneById(id, Price.class);
         watch.stop();
-        log.info("op=fetchPrice,status=OK,desc=successfully created price in {} ms",
+        log.info("op=fetchPrice,status=OK,desc=successfully fetch price in {} ms",
                  watch.getTime());
         return price;
     }

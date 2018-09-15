@@ -5,15 +5,16 @@ import com.myretail.data.respository.entity.Price;
 import com.myretail.rest.aggregator.ProductAggregator;
 import com.myretail.rest.product.request.PriceRequest;
 import com.myretail.rest.product.response.ProductResponse;
-import com.myretail.service.item.ItemService;
 import com.myretail.service.price.PriceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.time.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
+
 public class ProductController {
 
     private PriceService priceService;
@@ -26,8 +27,8 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value ="/product/{id}", method = RequestMethod.GET)
-    public ProductResponse getProductDetails(@PathVariable String id) {
+    @RequestMapping(value ="/v1/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductResponse getProductDetails(@PathVariable String id) throws  Exception {
         StopWatch watch = new StopWatch();
         watch.start();
         ProductResponse response= productAggregator.fetchProduct(id);
@@ -37,8 +38,8 @@ public class ProductController {
         return response;
     }
 
-    @RequestMapping(value = "/price/{id}", method = RequestMethod.POST)
-    public Price createPriceById(@PathVariable String id, @RequestBody (required = false)PriceRequest request) {
+    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Price createPriceById(@PathVariable String id, @RequestBody (required = false)PriceRequest request) throws Exception{
         StopWatch watch = new StopWatch();
         watch.start();
         request.setId(id);
@@ -49,8 +50,8 @@ public class ProductController {
         return price;
     }
 
-    @RequestMapping(value = "/price/{id}", method = RequestMethod.GET)
-    public Price getPrice(@PathVariable String id) {
+    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Price getPrice(@PathVariable String id) throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
         Price price = priceService.fetchPrice(id);
