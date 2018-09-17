@@ -44,12 +44,12 @@ gradle bootRun
 ## Sample CURL Requests
 
 curl -X POST \
-  http://localhost:8080/v1/products/16483589 \
+  http://localhost:8080/v1/price/52268280 \
   -H 'content-type: application/json' \
   -d '{
-	"price":"12.50",
+	"price":"22.50",
 	"currency":"USD"
 }'
 
 curl -X GET \
-  http://localhost:8080/v1/products/16483589
+  http://localhost:8080/v1/product/52268280
