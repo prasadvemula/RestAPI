@@ -36,7 +36,7 @@ gradle bootRun
 
 | Method | Route | Class | Description
 | ------ | ----- | ----- | -----------
-| GET  | /v1/products/15117729 | ProductController.getProductDetails | Item name along with the price
+| GET  | /v1/product/15117729 | ProductController.getProductDetails | Item name along with the price
 | POST | /v1/price/15117729 | ProductController.createPriceById | create/updates price for a given item id
 | GET | /v1/price/15117729 | ProductController.getPrice | get price details
 
