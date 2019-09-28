@@ -1,45 +1,71 @@
 package com.myretail.rest.product.controller;
 
-
-import com.myretail.data.respository.entity.Price;
+import com.myretail.exceptions.ProductException;
+import com.myretail.respository.entity.Price;
 import com.myretail.rest.aggregator.ProductAggregator;
 import com.myretail.rest.product.request.PriceRequest;
 import com.myretail.rest.product.response.ProductResponse;
 import com.myretail.service.price.PriceService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.time.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductController {
 
+    @Autowired
     private PriceService priceService;
-    private ProductAggregator productAggregator;
 
     @Autowired
-    public ProductController(ProductAggregator productAggregator, PriceService priceService){
-        this.productAggregator = productAggregator;
-        this.priceService = priceService;
-    }
+    private ProductAggregator productAggregator;
 
-
-    @RequestMapping(value ="/v1/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductResponse getProductDetails(@PathVariable String id) throws  Exception {
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = ProductResponse.class),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")}
+    )
+    @RequestMapping(value ="/v1/product/{id}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductResponse> getProductDetails (
+            @PathVariable String id) throws ProductException {
         StopWatch watch = new StopWatch();
         watch.start();
-        ProductResponse response= productAggregator.fetchProduct(id);
+        ProductResponse product= productAggregator.fetchProduct(id);
         watch.stop();
-        log.info("op={},status=OK,desc=successfully fetched item Details for the itemId {} in {} ms",
+        log.info("op={},status=OK,desc=successfully fetched item details for the itemId {} in {} ms",
                 "Item Details", id, watch.getTime());
-        return response;
+        return new ResponseEntity(product, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Price createPriceById(@PathVariable String id, @RequestBody (required = false)PriceRequest request) throws Exception{
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = ProductResponse.class),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")}
+    )
+    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Price> createPriceById(
+            @PathVariable String id, @RequestBody(required = false)PriceRequest request)
+            throws Exception{
         StopWatch watch = new StopWatch();
         watch.start();
         request.setId(id);
@@ -47,17 +73,27 @@ public class ProductController {
         watch.stop();
         log.info("op={},status=OK,desc=successfully created price for the itemId {} in {} ms",
                 "create price", id, watch.getTime());
-        return price;
+        return new ResponseEntity(price, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Price getPrice(@PathVariable String id) throws Exception {
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Success", response = ProductResponse.class),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")}
+    )
+    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Price> updatePrice(
+            @PathVariable String id, @RequestBody (required = false)PriceRequest priceRequest)
+            throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
-        Price price = priceService.fetchPrice(id);
+        priceRequest.setId(id);
+        Price price = priceService.updatePrice(priceRequest);
         watch.stop();
-        log.info("op={},status=OK,desc=successfully fetched price Details for the itemId {} in {} ms",
+        log.info("op={},status=OK,desc=successfully updated price details for the itemId {} in {} ms",
                 "Item Details", id, watch.getTime());
-        return price;
+        return new ResponseEntity(price, HttpStatus.OK);
     }
 }

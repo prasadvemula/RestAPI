@@ -4,18 +4,19 @@ import com.myretail.facade.ItemFacade;
 import com.myretail.rest.product.response.ItemResponse;
 import com.myretail.rest.product.response.ProductResponse;
 import com.myretail.service.item.ItemService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemServiceImpl implements ItemService {
+    @Autowired
     private ItemFacade itemFacade;
 
-    @Autowired
-    public ItemServiceImpl(ItemFacade itemFacade){
-        this.itemFacade = itemFacade;
-    }
     @Override
     public ProductResponse getProductDetails(String id) {
         ItemResponse item = itemFacade.getItem(id);

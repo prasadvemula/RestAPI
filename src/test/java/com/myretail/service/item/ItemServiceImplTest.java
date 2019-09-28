@@ -2,6 +2,7 @@ package com.myretail.service.item;
 
 import com.myretail.facade.ItemFacade;
 import com.myretail.facade.impl.ItemFacadeImpl;
+import com.myretail.mock.ProductMockData;
 import com.myretail.rest.product.response.ItemResponse;
 import com.myretail.rest.product.response.ProductResponse;
 import com.myretail.service.item.impl.ItemServiceImpl;
@@ -26,7 +27,6 @@ public class ItemServiceImplTest {
     @Mock
     ItemFacade facade;
 
-
     @Before
     public void setUp() throws Exception {
         itemServiceImpl = new ItemServiceImpl(facade);
@@ -34,7 +34,7 @@ public class ItemServiceImplTest {
 
     @Test
     public void testGetProductDetails() throws  Exception {
-        ItemResponse item = getItemDetails();
+        ItemResponse item = ProductMockData.getItemDetails();
 
         when(facade.getItem(any())).thenReturn(item);
         ProductResponse product = itemServiceImpl.getProductDetails("1234567");
@@ -42,23 +42,5 @@ public class ItemServiceImplTest {
         Assert.assertEquals(item.getProduct().getItem().getTcin(), product.getPartNumber());
         Assert.assertEquals(item.getProduct().getItem().getProductDescription().getTitle(),product.getTitle());
 
-    }
-
-    protected ItemResponse getItemDetails() throws  Exception {
-        ItemResponse response = new ItemResponse();
-        ItemResponse.Product product = new ItemResponse.Product();
-        ItemResponse.Item item = new ItemResponse.Item();
-        ItemResponse.ProductDescription productDescription = new ItemResponse.ProductDescription();
-
-        productDescription.setTitle("IPAD");
-
-        item.setTcin("1234567");
-        item.setProductDescription(productDescription);
-
-        product.setItem(item);
-
-        response.setProduct(product);
-
-        return response;
     }
 }
