@@ -38,13 +38,16 @@ gradle bootRun
 | ------ | ----- | ----- | -----------
 | GET  | /v1/product/15117729 | ProductController.getProductDetails | Item name along with the price
 | POST | /v1/price/15117729 | ProductController.createPriceById | create/updates price for a given item id
-| GET | /v1/price/15117729 | ProductController.getPrice | get price details
+| PUT | /v1/price/15117729 | ProductController.updatePriceById | update price details
 
+## Swagger spec for service definitions/contracts
+
+http://localhost:8082/swagger-ui.html
 
 ## Sample CURL Requests
 
 curl -X POST \
-  http://localhost:8080/v1/price/52268280 \
+  http://localhost:8082/v1/price/52268280 \
   -H 'content-type: application/json' \
   -d '{
 	"price":"22.50",
@@ -52,4 +55,4 @@ curl -X POST \
 }'
 
 curl -X GET \
-  http://localhost:8080/v1/product/52268280
+  http://localhost:8082/v1/product/52268280
