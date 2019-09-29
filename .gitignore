@@ -97,3 +97,7 @@ build/classes/java/main/com/myretail/exceptions/APIError.class
 build/classes/java/main/com/myretail/exceptions/ErrorResponse.class
 build/classes/java/main/com/myretail/exceptions/GlobalExceptionHandler.class
 build/classes/java/main/com/myretail/exceptions/ItemResponseErrorHandler.class
+.idea/gradle.xml
+.idea/misc.xml
+.idea/vcs.xml
+build/libs/myreatail-rest-service-0.1.0.jar

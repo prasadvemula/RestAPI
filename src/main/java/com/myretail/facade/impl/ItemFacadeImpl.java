@@ -4,6 +4,7 @@ import com.myretail.config.ApiConfig;
 import com.myretail.exceptions.ProductException;
 import com.myretail.facade.ItemFacade;
 import com.myretail.rest.product.response.ItemResponse;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.time.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
+    @HystrixCommand(defaultFallback = "callGetItemFallback")
     public ItemResponse getItem(String productId) throws ProductException {
         StopWatch watch = new StopWatch();
         watch.start();
@@ -53,6 +55,11 @@ public class ItemFacadeImpl implements ItemFacade {
             throw new ProductException("ERR_ITEM_NOT_FOUND", excep);
         }
         return response;
+    }
+
+    @SuppressWarnings("unused")
+    private ItemResponse callGetItemFallback() {
+        throw new ProductException("ERR_ITEM_INTEGRATION");
     }
 
 }
