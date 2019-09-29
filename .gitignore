@@ -101,3 +101,5 @@ build/classes/java/main/com/myretail/exceptions/ItemResponseErrorHandler.class
 .idea/misc.xml
 .idea/vcs.xml
 build/libs/myreatail-rest-service-0.1.0.jar
+.gradle/4.9/fileHashes/resourceHashesCache.bin
+.idea/.name

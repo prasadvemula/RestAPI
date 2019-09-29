@@ -23,7 +23,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 
 bootJar {
-    baseName = 'myreatail-rest-service'
+    baseName = 'myretail-product-api'
     version =  '0.1.0'
 }
 
@@ -34,7 +34,7 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'build', 'test'
 
 checkstyle {
     configFile = new File(rootDir, "tools/checkstyle/checkstyle.xml")
@@ -47,6 +47,10 @@ pmd {
     ignoreFailures = false
     ruleSets = [ "java-basic", "java-empty", "java-unnecessary",
                  "java-strings", "java-braces" ]
+}
+
+test {
+    useJUnit()
 }
 
 dependencies {
