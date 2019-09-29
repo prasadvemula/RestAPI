@@ -36,7 +36,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price updatePrice(PriceRequest priceRequest) {
-        Price price = priceRepository.fetchPrice(priceRequest.getId());
+        Price price = priceRepository.fetchPrice(priceRequest.getPartNumber());
         price.setPrice(priceRequest.getPrice());
         priceRepository.updatePrice(price);
         return price;

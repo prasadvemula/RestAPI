@@ -41,16 +41,16 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value = "/v1/product/{id}", method = RequestMethod.GET,
+    @RequestMapping(value = "/v1/product/{part_number}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductResponse> getProductDetails (
-            @PathVariable String id) throws ProductException {
+            @PathVariable String part_number) throws ProductException {
         StopWatch watch = new StopWatch();
         watch.start();
-        ProductResponse product = productAggregator.fetchProduct(id);
+        ProductResponse product = productAggregator.fetchProduct(part_number);
         watch.stop();
         log.info("op={},status=OK,desc=successfully fetched item details for the itemId {} " +
-                        "in {} ms", "Item Details", id, watch.getTime());
+                        "in {} ms", "Item Details", part_number, watch.getTime());
         return new ResponseEntity(product, HttpStatus.OK);
     }
 
@@ -65,13 +65,13 @@ public class ProductController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Price> createPriceById(
-            @RequestBody(required = false)PriceRequest priceRequest) throws Exception {
+            @RequestBody(required = false) PriceRequest priceRequest) throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
         Price price = priceService.createPrice(priceRequest);
         watch.stop();
         log.info("op={},status=OK,desc=successfully created price for the itemId {} in {} ms",
-                "create price", priceRequest.getId(), watch.getTime());
+                "create price", priceRequest.getPartNumber(), watch.getTime());
         return new ResponseEntity(price, HttpStatus.CREATED);
     }
 
@@ -82,18 +82,19 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.PUT,
+    @RequestMapping(value = "/v1/price/{part_number}", method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Price> updatePriceById(
-            @PathVariable String id, @RequestBody (required = false)PriceRequest priceRequest)
+            @PathVariable String part_number,
+            @RequestBody (required = false) PriceRequest priceRequest)
             throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
-        priceRequest.setId(id);
+        priceRequest.setPartNumber(part_number);
         Price price = priceService.updatePrice(priceRequest);
         watch.stop();
         log.info("op={},status=OK,desc=successfully updated price details for the itemId {} " +
-                        "in {} ms", "Item Details", id, watch.getTime());
+                        "in {} ms", "Item Details", part_number, watch.getTime());
         return new ResponseEntity(price, HttpStatus.OK);
     }
 }

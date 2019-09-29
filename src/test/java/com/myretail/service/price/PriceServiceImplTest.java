@@ -33,7 +33,7 @@ public class PriceServiceImplTest {
         Price response = ProductMockData.getPriceResponse();
         when(priceRepository.fetchPrice(any())).thenReturn(response);
         Price p = priceServiceImpl.fetchPrice("123");
-        Assert.assertEquals(p.getId(), response.getId());
+        Assert.assertEquals(p.getPartNumber(), response.getPartNumber());
         Assert.assertEquals(p.getPrice(), response.getPrice());
         Assert.assertEquals(p.getCurrency(), response.getCurrency());
     }
@@ -44,7 +44,7 @@ public class PriceServiceImplTest {
         Price response = ProductMockData.getPriceResponse();
         when(priceRepository.createPrice(any())).thenReturn(response);
         Price p = priceServiceImpl.createPrice(request);
-        Assert.assertEquals(p.getId(), response.getId());
+        Assert.assertEquals(p.getPartNumber(), response.getPartNumber());
         Assert.assertEquals(p.getCurrency(), response.getCurrency());
         Assert.assertEquals(p.getPrice(), response.getPrice());
     }

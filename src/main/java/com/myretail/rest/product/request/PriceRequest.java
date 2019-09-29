@@ -9,7 +9,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PriceRequest {
-    private String id;
+    private String partNumber;
     private String price;
     private String currency = "USD";
 }

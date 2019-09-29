@@ -24,9 +24,7 @@ public class ItemServiceImpl implements ItemService {
         ProductResponse product = new ProductResponse();
         if (null != item && null != item.getProduct() && null != item.getProduct().getItem()) {
             product.setPartNumber(item.getProduct().getItem().getTcin());
-            if (null != item.getProduct().getItem().getProductDescription()) {
-                product.setTitle(item.getProduct().getItem().getProductDescription().getTitle());
-            }
+            product.setTitle(item.getProduct().getItem().getProductDescription().getTitle());
         }
         return product;
     }
