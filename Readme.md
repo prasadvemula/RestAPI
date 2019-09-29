@@ -62,5 +62,5 @@ curl -X PUT \
   http://localhost:8082/v1/price/52268280 \
   -H 'content-type: application/json' \
   -d '{
-	"price":"22.50""
+	"price":"22.50"
 }'
