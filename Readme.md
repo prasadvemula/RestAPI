@@ -3,9 +3,12 @@
 This is a Restful aggregator service which collects product name and price information from different sources and returns output as shown below:
 
 {
-    "partNumber": "15117729",
-    "title": "The Big Lebowski (Blu-ray)",
-    "price": "500.50"
+    "part_number": "76198491",
+    "title": "Samsung 55\" Smart 4K UHD TV - Charcoal Black (UN55RU7100FXZA)",
+    "current_price": {
+	"value": "499.99",
+	"currency": "USD"
+     }
 }
 
 ## Technology Stack
@@ -36,9 +39,9 @@ gradle bootRun
 
 | Method | Route | Class | Description
 | ------ | ----- | ----- | -----------
-| GET  | /v1/product/15117729 | ProductController.getProductDetails | Item name along with the price
+| GET  | /v1/product/76198491 | ProductController.getProductDetails | Item name along with the price
 | POST | /v1/price | ProductController.createPriceById | create/updates price for a given item id
-| PUT | /v1/price/15117729 | ProductController.updatePriceById | update price details
+| PUT | /v1/price/76198491 | ProductController.updatePriceById | update price details
 
 ## Swagger spec for service definitions/contracts
 
@@ -50,17 +53,17 @@ curl -X POST \
   http://localhost:8082/v1/price \
   -H 'content-type: application/json' \
   -d '{
-  	"id": "15117729",
-	"price":"22.50",
+  	"id": "76198491",
+	"price":"499.99",
 	"currency":"USD"
 }'
 
 curl -X GET \
-  http://localhost:8082/v1/product/52268280
+  http://localhost:8082/v1/product/76198491
   
 curl -X PUT \
-  http://localhost:8082/v1/price/52268280 \
+  http://localhost:8082/v1/price/76198491 \
   -H 'content-type: application/json' \
   -d '{
-	"price":"22.50"
+	"price":"449.99"
 }'
