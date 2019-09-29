@@ -61,8 +61,9 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/v1/price}", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Price> createPriceById(
             @PathVariable String id, @RequestBody(required = false)PriceRequest request)
             throws Exception{
@@ -83,8 +84,9 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Price> updatePrice(
+    @RequestMapping(value = "/v1/price/{id}", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Price> updatePriceById(
             @PathVariable String id, @RequestBody (required = false)PriceRequest priceRequest)
             throws Exception {
         StopWatch watch = new StopWatch();
