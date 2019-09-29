@@ -17,7 +17,8 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public class ErrorHandlingController {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ProductExceptionResponse> generalException(Exception exception) throws  Exception {
+    public ResponseEntity<ProductExceptionResponse> generalException(Exception exception)
+            throws  Exception {
         ProductExceptionResponse response = new ProductExceptionResponse();
         HttpStatus status = getHttpStatus(exception);
         response.setCode(status.value());
@@ -26,7 +27,8 @@ public class ErrorHandlingController {
     }
 
     @ExceptionHandler(ProductException.class)
-    public ResponseEntity<ProductExceptionResponse> generalException(ProductException e) throws  Exception {
+    public ResponseEntity<ProductExceptionResponse> generalException(ProductException e)
+            throws  Exception {
         ProductExceptionResponse response = new ProductExceptionResponse();
         HttpStatus status = getHttpStatus(e);
         response.setCode(status.value());
@@ -36,7 +38,8 @@ public class ErrorHandlingController {
 
     protected HttpStatus getHttpStatus(Exception e) {
         HttpStatus httpStatus;
-        Annotation statusAnnotation = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
+        Annotation statusAnnotation
+                = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
         if (statusAnnotation != null) {
             httpStatus = (HttpStatus) AnnotationUtils.getValue(statusAnnotation);
         } else {

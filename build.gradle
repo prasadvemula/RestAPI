@@ -34,6 +34,21 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+defaultTasks 'clean', 'build'
+
+checkstyle {
+    configFile = new File(rootDir, "tools/checkstyle/checkstyle.xml")
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+}
+
+pmd {
+    sourceSets = [sourceSets.main, sourceSets.test]
+    ignoreFailures = false
+    ruleSets = [ "java-basic", "java-empty", "java-unnecessary",
+                 "java-strings", "java-braces" ]
+}
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:1.5.7.RELEASE")
     compile 'org.projectlombok:lombok:1.16.12'

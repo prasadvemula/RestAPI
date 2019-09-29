@@ -23,7 +23,6 @@ public class ItemResponse {
     }
 
     @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Item{
         private String tcin;
         @JsonProperty("product_description")
@@ -31,7 +30,6 @@ public class ItemResponse {
     }
 
     @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ProductDescription {
         private String title;
     }

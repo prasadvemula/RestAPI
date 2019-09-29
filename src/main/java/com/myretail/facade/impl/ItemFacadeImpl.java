@@ -20,6 +20,10 @@ public class ItemFacadeImpl implements ItemFacade {
 
     private ApiConfig apiConfig;
 
+    private static String itemQueryString
+            = "?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews," +
+            "rating_and_review_statistics,question_answer_statistics";
+
     @Autowired
     public ItemFacadeImpl(RestTemplateBuilder builder, ApiConfig apiConfig) {
         this.apiConfig = apiConfig;
@@ -37,15 +41,15 @@ public class ItemFacadeImpl implements ItemFacade {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .fromUriString(apiConfig.getItemApiBaseURL()
                         .concat("/pdp/tcin/").concat(productId)
-                        .concat("?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics"));
+                        .concat(itemQueryString));
 
         try {
                 response = itemRestTemplate.getForObject(
                     builder.toUriString(), ItemResponse.class);
             watch.stop();
-            log.info("op={},status=OK,desc=successfully fetched item Details for the itemId {} in {} ms",
-                    "getItem", productId, watch.getTime());
-        } catch(Exception excep) {
+            log.info("op={},status=OK,desc=successfully fetched item Details " +
+                            "for the itemId {} in {} ms", "getItem", productId, watch.getTime());
+        } catch (Exception excep) {
             throw new ProductException("TCIN not found!", excep);
         }
         return response;

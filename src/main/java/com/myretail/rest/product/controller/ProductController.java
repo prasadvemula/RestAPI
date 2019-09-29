@@ -41,16 +41,16 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value ="/v1/product/{id}", method = RequestMethod.GET,
+    @RequestMapping(value = "/v1/product/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductResponse> getProductDetails (
             @PathVariable String id) throws ProductException {
         StopWatch watch = new StopWatch();
         watch.start();
-        ProductResponse product= productAggregator.fetchProduct(id);
+        ProductResponse product = productAggregator.fetchProduct(id);
         watch.stop();
-        log.info("op={},status=OK,desc=successfully fetched item details for the itemId {} in {} ms",
-                "Item Details", id, watch.getTime());
+        log.info("op={},status=OK,desc=successfully fetched item details for the itemId {} " +
+                        "in {} ms", "Item Details", id, watch.getTime());
         return new ResponseEntity(product, HttpStatus.OK);
     }
 
@@ -61,19 +61,17 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")}
     )
-    @RequestMapping(value = "/v1/price}", method = RequestMethod.POST,
+    @RequestMapping(value = "/v1/price", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Price> createPriceById(
-            @PathVariable String id, @RequestBody(required = false)PriceRequest request)
-            throws Exception{
+            @RequestBody(required = false)PriceRequest priceRequest) throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
-        request.setId(id);
-        Price price = priceService.createPrice(request);
+        Price price = priceService.createPrice(priceRequest);
         watch.stop();
         log.info("op={},status=OK,desc=successfully created price for the itemId {} in {} ms",
-                "create price", id, watch.getTime());
+                "create price", priceRequest.getId(), watch.getTime());
         return new ResponseEntity(price, HttpStatus.CREATED);
     }
 
@@ -94,8 +92,8 @@ public class ProductController {
         priceRequest.setId(id);
         Price price = priceService.updatePrice(priceRequest);
         watch.stop();
-        log.info("op={},status=OK,desc=successfully updated price details for the itemId {} in {} ms",
-                "Item Details", id, watch.getTime());
+        log.info("op={},status=OK,desc=successfully updated price details for the itemId {} " +
+                        "in {} ms", "Item Details", id, watch.getTime());
         return new ResponseEntity(price, HttpStatus.OK);
     }
 }

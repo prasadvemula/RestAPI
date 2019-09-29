@@ -1,4 +1,4 @@
-package com.myretail.rest.aggregator.Impl;
+package com.myretail.rest.aggregator.impl;
 
 import com.myretail.exceptions.ProductException;
 import com.myretail.respository.entity.Price;
@@ -28,22 +28,25 @@ public class ProductAggregatorImpl implements ProductAggregator {
     @Override
     public ProductResponse fetchProduct(String id) throws ProductException {
         Observable<ProductResponse> itemObservable
-                = Observable.fromCallable(() -> itemService.getProductDetails(id)).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+                = Observable.fromCallable(() -> itemService.getProductDetails(id))
+                        .subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
         Observable<Price> priceObservable =
                 Observable.fromCallable(() -> priceService.fetchPrice(id)).subscribeOn(
-                        (Schedulers.io())).observeOn((Schedulers.single())).onErrorReturnItem(new Price());
+                        Schedulers.io()).observeOn(Schedulers.single())
+                            .onErrorReturnItem(new Price());
 
-        ProductResponse product = Observable.zip(itemObservable, priceObservable, this::aggregate).blockingFirst();
+        ProductResponse product = Observable.zip(itemObservable, priceObservable, this::aggregate)
+                                            .blockingFirst();
 
         return product;
     }
 
     public ProductResponse aggregate(ProductResponse product, Price price) {
-        if(price != null) {
+        if (price != null) {
             ProductResponse.Price priceResponse = new ProductResponse.Price();
             priceResponse.setValue(price.getPrice());
             priceResponse.setCurrency(price.getCurrency());
-            product.setPrice(priceResponse);
+            product.setCurrentPrice(priceResponse);
         }
 
         return product;
