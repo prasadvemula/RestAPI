@@ -91,3 +91,9 @@ build/test-results/test/binary/output.bin
 build/test-results/test/binary/output.bin.idx
 build/test-results/test/binary/results.bin
 build/tmp/bootJar/MANIFEST.MF
+.idea/uiDesigner.xml
+build/classes/java/main/com/myretail/MyRetailApplication.class
+build/classes/java/main/com/myretail/exceptions/APIError.class
+build/classes/java/main/com/myretail/exceptions/ErrorResponse.class
+build/classes/java/main/com/myretail/exceptions/GlobalExceptionHandler.class
+build/classes/java/main/com/myretail/exceptions/ItemResponseErrorHandler.class

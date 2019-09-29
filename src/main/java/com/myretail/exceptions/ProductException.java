@@ -9,19 +9,28 @@ public class ProductException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private int code;
     private String errorKey;
-    private String message;
+    private String errorMessage;
 
     public ProductException(String errorKey) {
         super(errorKey);
         this.errorKey = errorKey;
     }
 
+    public ProductException(String errorKey, String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
     public ProductException(String errorKey, Throwable e) {
         super(errorKey, e);
         this.errorKey = errorKey;
-        this.message = message;
     }
 
+    public String getErrorKey() {
+        return errorKey;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }

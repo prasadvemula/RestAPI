@@ -50,13 +50,9 @@ public class ItemFacadeImpl implements ItemFacade {
             log.info("op={},status=OK,desc=successfully fetched item Details " +
                             "for the itemId {} in {} ms", "getItem", productId, watch.getTime());
         } catch (Exception excep) {
-            throw new ProductException("TCIN not found!", excep);
+            throw new ProductException("ERR_ITEM_NOT_FOUND", excep);
         }
         return response;
-    }
-
-    private String defaultProduct(String productId) {
-        throw new ProductException("TCIN not found!");
     }
 
 }
